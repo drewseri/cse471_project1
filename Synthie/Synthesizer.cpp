@@ -2,6 +2,7 @@
 #include "Synthesizer.h"
 #include <cmath>
 #include "ToneInstrument.h"
+#include "Organ.h"
 #include "xmlhelp.h"
 #include <algorithm>
 
@@ -65,6 +66,11 @@ bool CSynthesizer::Generate(double * frame)
         if(note->Instrument() == L"ToneInstrument")
         {
             instrument = new CToneInstrument(m_bpm);
+        }
+
+		if(note->Instrument() == L"Organ")
+        {
+            instrument = new COrgan(m_bpm);
         }
 
         // Configure the instrument object
