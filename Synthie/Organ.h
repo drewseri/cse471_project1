@@ -23,6 +23,7 @@ public CInstrument
 
 	private:
 	   CSineWave   m_sinewave;
+	   void AR(double*);
 	   double m_duration;
 	   double m_time;
 	   double m_bpm;

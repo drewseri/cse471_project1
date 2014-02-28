@@ -24,7 +24,10 @@ bool CSineWave::Generate()
     m_frame[0] = m_amp * sin(m_phase * 2 * PI);
     m_frame[1] = m_frame[0];
 
-    m_phase += m_freq * GetSamplePeriod();
-
     return true;
+}
+
+void CSineWave::UpdatePhase()
+{
+	m_phase += m_freq * GetSamplePeriod();
 }
