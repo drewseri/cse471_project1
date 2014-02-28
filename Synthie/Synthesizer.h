@@ -5,8 +5,6 @@
 #include "Instrument.h"
 #include "Note.h"
 
-using namespace std;
-
 class CSynthesizer
 {
 public:
@@ -28,31 +26,35 @@ public:
 	//! Set the sample rate
     void SetSampleRate(double s) {m_sampleRate = s;  m_samplePeriod = 1.0 / s;}
 
-	void Start();
 
+	void Start(void);
 	bool Generate(double * frame);
 
 	//! Get the time since we started generating audio
     double GetTime() {return m_time;}
 
-	void Clear();
+	void Clear(void);
 
 	void OpenScore(CString & filename);
 
 private:
+	void XmlLoadScore(IXMLDOMNode * xml);
+	void XmlLoadInstrument(IXMLDOMNode * xml);
+	void XmlLoadNote(IXMLDOMNode * xml, std::wstring & instrument);
+
     int		m_channels;
     double	m_sampleRate;
     double	m_samplePeriod;
-	double  m_time;
-	std::list<CInstrument *>  m_instruments;
-	double  m_bpm;                  //!< Beats per minute
-    int     m_beatspermeasure;  //!< Beats per measure
-    double  m_secperbeat;        //!< Seconds per beat
-	void XmlLoadInstrument(IXMLDOMNode * xml);
-	void XmlLoadScore(IXMLDOMNode * xml);
-	void XmlLoadNote(IXMLDOMNode * xml, std::wstring & instrument);
+    double  m_time;
+
+    int     m_beatspermeasure;	//!< Beats per measure
+    double  m_secperbeat;		//!< Seconds per beat
+
+    std::list<CInstrument *>  m_instruments;
 	std::vector<CNote> m_notes;
-    int m_currentNote;          //!< The current note we are playing
+
+	double  m_bpm;				//!< Beats per minute
+	int m_currentNote;          //!< The current note we are playing
     int m_measure;              //!< The current measure
     double m_beat;              //!< The current beat within the measure
 };

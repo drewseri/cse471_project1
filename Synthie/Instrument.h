@@ -1,6 +1,9 @@
 #pragma once
-#include "audionode.h"
+#include "AudioNode.h"
 #include "Note.h"
+
+class CSynthesizer;
+
 class CInstrument :
 	public CAudioNode
 {

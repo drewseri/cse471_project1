@@ -1,5 +1,6 @@
 #pragma once
-#include "audionode.h"
+#include "AudioNode.h"
+
 class CSineWave :
 	public CAudioNode
 {
@@ -7,7 +8,7 @@ public:
 	CSineWave(void);
 	virtual ~CSineWave(void);
 
-    //! Start audio generation
+	//! Start audio generation
     virtual void Start();
 
     //! Generate one frame of audio

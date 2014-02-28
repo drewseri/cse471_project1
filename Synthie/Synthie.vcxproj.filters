@@ -72,10 +72,10 @@
     <ClCompile Include="Note.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AR.cpp">
+    <ClCompile Include="Organ.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Organ.cpp">
+    <ClCompile Include="AR.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -146,10 +146,10 @@
     <ClInclude Include="Note.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AR.h">
+    <ClInclude Include="Organ.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Organ.h">
+    <ClInclude Include="AR.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,11 +1,12 @@
 #include "StdAfx.h"
 #include "SineWave.h"
-
 #include <cmath>
-
 
 CSineWave::CSineWave(void)
 {
+	m_phase = 0;
+	m_amp = 0.1;
+	m_freq = 440;
 }
 
 

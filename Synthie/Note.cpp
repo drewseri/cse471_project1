@@ -11,10 +11,9 @@ CNote::~CNote(void)
 {
 }
 
-void CNote::XmlLoad(IXMLDOMNode * xml, 
-                         std::wstring & instrument)
+void CNote::XmlLoad(IXMLDOMNode * xml, std::wstring & instrument)
 {
-	// Remember the xml node and the instrument.
+    // Remember the xml node and the instrument.
     m_node = xml;
     m_instrument = instrument;
 

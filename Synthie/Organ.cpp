@@ -7,7 +7,8 @@ COrgan::COrgan(void)
 	m_duration = 0.1;
 	m_bpm = 120;
 }
-COrgan::COrgan(double bpm){
+COrgan::COrgan(double bpm)
+{
 	m_duration = 0.1;
 	m_bpm = bpm;
 }
@@ -18,16 +19,11 @@ COrgan::~COrgan(void)
 
 void COrgan::Start()
 {
-    m_sinewave.SetSampleRate(GetSampleRate());
+	m_sinewave.SetSampleRate(GetSampleRate());
     m_sinewave.Start();
     m_time = 0;
 
-	// Tell the AR object it gets its samples from 
-    // the sine wave object.
-    m_ar.SetSource(m_sinewave);
-    m_ar.SetSampleRate(GetSampleRate());
-	m_ar.SetBpm(m_bpm);
-    m_ar.Start();
+    m_duration = m_duration * (1 / (m_bpm/60));
 }
 
 
@@ -40,51 +36,80 @@ bool COrgan::Generate()
     m_frame[0] = m_sinewave.Frame(0);
     m_frame[1] = m_sinewave.Frame(1);
 
+	if(m_time < 0.05)
+	{
+		m_frame[0] = m_frame[0] * (m_time/0.05);
+		m_frame[1] = m_frame[1] * (m_time/0.05);
+	}
+
+	else if( m_duration - m_time < 0.05)
+	{
+		m_frame[0] = m_frame[0] * (m_duration-m_time)/0.05;
+		m_frame[1] = m_frame[1] * (m_duration-m_time)/0.05;
+	}
+
     // Update time
     m_time += GetSamplePeriod();
 
     // We return true until the time reaches the duration.
-    return m_time*m_bpm/60 < m_duration;
+    return m_time < m_duration;
+}
+
+void COrgan::SetDrawBar(WCHAR * setting)
+{
+	m_drawbar.resize(9);
+	int count = 0;
+	int num = wcslen(setting);
+
+	for(int i=0;i<num;i++)
+	{
+		m_drawbar[count] = setting[i];
+		count++;
+	}
 }
 
 void COrgan::SetNote(CNote *note)
 {
-    // Get a list of all attribute nodes and the
-    // length of that list
-    CComPtr<IXMLDOMNamedNodeMap> attributes;
-    note->Node()->get_attributes(&attributes);
-    long len;
-    attributes->get_length(&len);
+   // Get a list of all attribute nodes and the
+   // length of that list
+   CComPtr<IXMLDOMNamedNodeMap> attributes;
+   note->Node()->get_attributes(&attributes);
+   long len;
+   attributes->get_length(&len);
 
-    // Loop over the list of attributes
-    for(int i=0;  i<len;  i++)
-    {
-        // Get attribute i
-        CComPtr<IXMLDOMNode> attrib;
-        attributes->get_item(i, &attrib);
+   // Loop over the list of attributes
+   for(int i=0;  i<len;  i++)
+   {
+       // Get attribute i
+       CComPtr<IXMLDOMNode> attrib;
+       attributes->get_item(i, &attrib);
 
-        // Get the name of the attribute
-        CComBSTR name;
-        attrib->get_nodeName(&name);
+       // Get the name of the attribute
+       CComBSTR name;
+       attrib->get_nodeName(&name);
 
-        // Get the value of the attribute.  A CComVariant is a variable
-        // that can have any type. It loads the attribute value as a
-        // string (UNICODE), but we can then change it to an integer 
-        // (VT_I4) or double (VT_R8) using the ChangeType function 
-        // and then read its integer or double value from a member variable.
-        CComVariant value;
-        attrib->get_nodeValue(&value);
+       // Get the value of the attribute.  A CComVariant is a variable
+       // that can have any type. It loads the attribute value as a
+       // string (UNICODE), but we can then change it to an integer 
+       // (VT_I4) or double (VT_R8) using the ChangeType function 
+       // and then read its integer or double value from a member variable.
+       CComVariant value;
+       attrib->get_nodeValue(&value);
 
-        if(name == "duration")
-        {
-            value.ChangeType(VT_R8);
-            SetDuration(value.dblVal);
-        }
+       if(name == "duration")
+       {
+           value.ChangeType(VT_R8);
+           SetDuration(value.dblVal);
+       }
 		else if(name == "note")
-        {
-            SetFreq(NoteToFrequency(value.bstrVal));
-        }
+		{
+			SetFreq(NoteToFrequency(value.bstrVal));
+		}
+		else if(name == "drawbar")
+		{
+			SetDrawBar(value.bstrVal);
+		}
 
-    }
+   }
 
 }

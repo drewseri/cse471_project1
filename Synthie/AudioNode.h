@@ -1,11 +1,14 @@
 #pragma once
+
+class CToneInstrument;
+
 class CAudioNode
 {
 public:
 	CAudioNode(void);
 	virtual ~CAudioNode(void);
 
-    //! Start the node generation
+	//! Start the node generation
     virtual void Start() = 0;
 
     //! Cause one sample to be generated
@@ -27,6 +30,7 @@ public:
     double Frame(int c) {return m_frame[c];}
 
 protected:
+	double m_bpm;
     double m_sampleRate;
     double m_samplePeriod;
     double m_frame[2];
