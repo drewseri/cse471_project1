@@ -25,6 +25,11 @@
 #define ID_GENERATE_SYNTHESIZER         32774
 #define ID_FILE_OPENSCORE               32775
 
+
+// Global defaults
+//
+#define NUM_EFFECTS_BUILD	1
+
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
