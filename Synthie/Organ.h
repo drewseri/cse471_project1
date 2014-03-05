@@ -15,18 +15,19 @@ public CInstrument
 		virtual void Start();
 		virtual bool Generate();
 
-		void SetFreq(double f) {m_sinewave.SetFreq(f);}
-	    void SetAmplitude(double a) {m_sinewave.SetAmplitude(a);}
+		void SetFreq(double f) {m_freq = f;}
 	    void SetDuration(double d) {m_duration = d;}
-		void SetDrawBar(WCHAR * setting);
+		void SetToneWheels(WCHAR * setting);
 		virtual void SetNote(CNote *note);
 
 	private:
-	   CSineWave   m_sinewave;
 	   void AR(double*);
 	   double m_duration;
 	   double m_time;
 	   double m_bpm;
 	   double m_freq;
-	   std::vector<char> m_drawbar;
+	   double m_amp;
+	   std::vector<char> m_tonewheels;
+	   std::vector<double> m_rad1;
+	   std::vector<double> m_rad2;
 };

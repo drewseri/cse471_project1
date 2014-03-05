@@ -19,29 +19,110 @@ COrgan::~COrgan(void)
 
 void COrgan::Start()
 {
-	m_sinewave.SetSampleRate(GetSampleRate());
-    m_sinewave.Start();
     m_time = 0;
-
     m_duration = m_duration * (1 / (m_bpm/60));
 }
 
 
 bool COrgan::Generate()
 {
-	for(int i=0; i<m_drawbar.size(); i++)
+	m_frame[0] = 0;
+	m_frame[1] = 0;
+	double SOUNDSPEED = 343;
+
+	double bar_freq = 0;
+
+	for(int i=0; i<m_tonewheels.size(); i++)
 	{
-		// Tell the component to generate an audio sample
-		m_sinewave.Generate();
+		if(i ==0)
+		{
+			bar_freq = m_freq*1;
+		}
+		else if(i ==1)
+		{
+			bar_freq = m_freq*3;
+		}
+		else if(i ==2)
+		{
+			bar_freq = m_freq*2;
+		}
+		else if(i ==3)
+		{
+			bar_freq = m_freq*4;
+		}
+		else if(i ==4)
+		{
+			bar_freq = m_freq*6;
+		}
+		else if(i ==5)
+		{
+			bar_freq = m_freq*8;
+		}
+		else if(i ==6)
+		{
+			bar_freq = m_freq*10;
+		}
+		else if(i ==7)
+		{
+			bar_freq = m_freq*12;
+		}
+		else if(i ==8)
+		{
+			bar_freq = m_freq*16;
+		}
 
-		// Read the component's sample and make it our resulting frame.
-		m_frame[0] = m_sinewave.Frame(0);
-		m_frame[1] = m_sinewave.Frame(1);
+		// Adjust for drawbar setting
+		if(m_tonewheels[i] == '8')
+		{
+			m_amp = 0.1;
+		}
+		else if(m_tonewheels[i] == '7')
+		{
+			m_amp = 0.0708;
+		}
+		else if(m_tonewheels[i] == '6')
+		{
+			m_amp = 0.0501;
+		}
+		else if(m_tonewheels[i] == '5')
+		{
+			m_amp = 0.0355;
+		}
+		else if(m_tonewheels[i] == '4')
+		{
+			m_amp = 0.0251;
+		}
+		else if(m_tonewheels[i] == '3')
+		{
+			m_amp = 0.0178;
+		}
+		else if(m_tonewheels[i] == '2')
+		{
+			m_amp = 0.0126;
+		}
+		else if(m_tonewheels[i] == '1')
+		{
+			m_amp = 0.0089;
+		}
+		else if(m_tonewheels[i] == '0')
+		{
+			m_amp = 0;
+		}
 
-		AR(m_frame);
+		// generate wave and add to the current wave
+		m_frame[0] += m_amp * sin(m_rad1[i]);
+		m_frame[1] = m_frame[0];
+
+		// calculate diff for vibrato
+		double diff = bar_freq * (0.2 *sin(m_rad2[i]));
+
+		// increment phases
+		m_rad1[i] += (2 * PI * (bar_freq + diff)) / GetSampleRate();
+		m_rad2[i] += (2 * PI * bar_freq) / GetSampleRate();
 	}
 
-	m_sinewave.UpdatePhase();
+	// Envelope
+	AR(m_frame);
 
     // Update time
     m_time += GetSamplePeriod();
@@ -65,15 +146,19 @@ void COrgan::AR(double * frame)
 	}
 }
 
-void COrgan::SetDrawBar(WCHAR * setting)
+void COrgan::SetToneWheels(WCHAR * setting)
 {
-	m_drawbar.resize(9);
+	m_tonewheels.resize(9);
+	m_rad1.resize(9);
+	m_rad2.resize(9);
 	int count = 0;
 	int num = wcslen(setting);
 
 	for(int i=0;i<num;i++)
 	{
-		m_drawbar[count] = setting[i];
+		m_tonewheels[count] = setting[i];
+		//m_rad1[count] = 0;
+		//m_rad2[count] = 0;
 		count++;
 	}
 }
@@ -117,7 +202,7 @@ void COrgan::SetNote(CNote *note)
 		}
 		else if(name == "drawbar")
 		{
-			SetDrawBar(value.bstrVal);
+			SetToneWheels(value.bstrVal);
 		}
 
    }
