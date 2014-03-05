@@ -22,11 +22,16 @@ public CInstrument
 
 	private:
 	   void AR(double*);
+	   void Leslie(double*);
+	   //double m_leslierad;
 	   double m_duration;
 	   double m_time;
+	   double m_time2;
 	   double m_bpm;
 	   double m_freq;
 	   double m_amp;
+	   double m_chorus[2];
+	   int PlayChorus;
 	   std::vector<char> m_tonewheels;
 	   std::vector<double> m_rad1;
 	   std::vector<double> m_rad2;

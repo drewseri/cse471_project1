@@ -1,31 +1,13 @@
-﻿Build started 3/4/2014 11:08:37 PM.
+﻿Build started 3/5/2014 10:47:56 AM.
      1>Project "C:\Users\Acer\Documents\Visual Studio 2010\git\cse471_project1\Synthie\Synthie.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\Synthie.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          All outputs are up-to-date.
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _UNICODE /D UNICODE /D _AFXDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\Synthie.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt AR.cpp AudioNode.cpp Instrument.cpp MainFrm.cpp Note.cpp Organ.cpp Progress.cpp ProgressDlg.cpp SineWave.cpp Synthesizer.cpp Synthie.cpp SynthieView.cpp ToneInstrument.cpp
-         Synthesizer.cpp
-         SineWave.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _UNICODE /D UNICODE /D _AFXDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\Synthie.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Organ.cpp
          Organ.cpp
-     1>c:\users\acer\documents\visual studio 2010\git\cse471_project1\synthie\organ.cpp(32): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\acer\documents\visual studio 2010\git\cse471_project1\synthie\organ.cpp(76): warning C4244: '=' : conversion from 'WCHAR' to 'char', possible loss of data
-         Note.cpp
-         Instrument.cpp
-         AudioNode.cpp
-         Generating Code...
-         Compiling...
-         ToneInstrument.cpp
-         SynthieView.cpp
-         Synthie.cpp
-         MainFrm.cpp
-         AR.cpp
-         Generating Code...
-         Skipping... (no relevant changes detected)
-         ProgressDlg.cpp
-         Progress.cpp
        ResourceCompile:
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /D _DEBUG /D _UNICODE /D UNICODE /D _AFXDLL /l"0x0409" /IDebug\ /nologo /fo"Debug\Synthie.res" Synthie.rc 
+         All outputs are up-to-date.
        ManifestResourceCompile:
          All outputs are up-to-date.
        Link:
@@ -65,4 +47,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:14.10
+Time Elapsed 00:00:01.64

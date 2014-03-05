@@ -20,19 +20,32 @@ COrgan::~COrgan(void)
 void COrgan::Start()
 {
     m_time = 0;
+	m_time2 = 0;
+	m_chorus[0] = 0;
+	m_chorus[1] = 0;
+	PlayChorus = 0;
     m_duration = m_duration * (1 / (m_bpm/60));
 }
 
 
 bool COrgan::Generate()
 {
+	if( PlayChorus )
+	{
+		m_time += GetSamplePeriod()/2;
+		m_frame[0] = m_chorus[0];
+		m_frame[1] = m_chorus[1];
+		AR(m_frame);
+		PlayChorus = 0;
+		return m_time < m_duration;
+	}
+
 	m_frame[0] = 0;
 	m_frame[1] = 0;
-	double SOUNDSPEED = 343;
 
 	double bar_freq = 0;
 
-	for(int i=0; i<m_tonewheels.size(); i++)
+	for(unsigned i=0; i<m_tonewheels.size(); i++)
 	{
 		if(i ==0)
 		{
@@ -121,14 +134,30 @@ bool COrgan::Generate()
 		m_rad2[i] += (2 * PI * bar_freq) / GetSampleRate();
 	}
 
+	// Leslie Effect
+	Leslie(m_frame);
+
 	// Envelope
 	AR(m_frame);
 
+	// Save frame for chorus effect
+	m_chorus[0] = m_frame[0];
+	m_chorus[1] = m_frame[1];
+
     // Update time
-    m_time += GetSamplePeriod();
+    m_time += GetSamplePeriod()/2;
+
+	PlayChorus = 1;
 
     // We return true until the time reaches the duration.
     return m_time < m_duration;
+}
+
+void COrgan::Leslie(double * frame)
+{
+	m_frame[0] = m_frame[0] * (1 - (0.3 * sin(2 * PI * m_time2)));
+	m_frame[1] = m_frame[1] * (1 - (0.3 * cos(2 * PI * m_time2)));
+	m_time2 += GetSamplePeriod()*15;
 }
 
 void COrgan::AR(double * frame)
@@ -156,9 +185,7 @@ void COrgan::SetToneWheels(WCHAR * setting)
 
 	for(int i=0;i<num;i++)
 	{
-		m_tonewheels[count] = setting[i];
-		//m_rad1[count] = 0;
-		//m_rad2[count] = 0;
+		m_tonewheels[count] = (char)setting[i];
 		count++;
 	}
 }
