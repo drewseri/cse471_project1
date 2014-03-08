@@ -155,9 +155,9 @@ bool COrgan::Generate()
 
 void COrgan::Leslie(double * frame)
 {
-	m_frame[0] = m_frame[0] * (1 - (0.3 * sin(2 * PI * m_time2)));
-	m_frame[1] = m_frame[1] * (1 - (0.3 * cos(2 * PI * m_time2)));
-	m_time2 += GetSamplePeriod()*15;
+	m_frame[0] = m_frame[0] * (1 - (0.4 * sin(2 * PI * m_time2)));
+	m_frame[1] = m_frame[1] * (1 - (0.4 * cos(2 * PI * m_time2)));
+	m_time2 += GetSamplePeriod()*3;
 }
 
 void COrgan::AR(double * frame)

@@ -23,7 +23,6 @@ public CInstrument
 	private:
 	   void AR(double*);
 	   void Leslie(double*);
-	   //double m_leslierad;
 	   double m_duration;
 	   double m_time;
 	   double m_time2;
