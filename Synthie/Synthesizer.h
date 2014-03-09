@@ -3,7 +3,9 @@
 #include <list>
 #include <vector>
 #include "Instrument.h"
+#include "Effect.h"
 #include "Note.h"
+#include "EffectFactory.h"
 
 class CSynthesizer
 {
@@ -41,6 +43,7 @@ private:
 	void XmlLoadScore(IXMLDOMNode * xml);
 	void XmlLoadInstrument(IXMLDOMNode * xml);
 	void XmlLoadNote(IXMLDOMNode * xml, std::wstring & instrument);
+	void XmlLoadEffect(IXMLDOMNode * xml, std::wstring & instrument);
 
     int		m_channels;
     double	m_sampleRate;
@@ -51,7 +54,10 @@ private:
     double  m_secperbeat;		//!< Seconds per beat
 
     std::list<CInstrument *>  m_instruments;
+	CEffect * m_effects[NUM_EFFECTS_BUILD + 1];
 	std::vector<CNote> m_notes;
+
+	EffectFactory m_factory;
 
 	double  m_bpm;				//!< Beats per minute
 	int m_currentNote;          //!< The current note we are playing

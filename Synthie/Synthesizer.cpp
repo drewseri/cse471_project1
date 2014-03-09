@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "Synthesizer.h"
 #include <cmath>
+#include "OctaveUp.h"
 #include "ToneInstrument.h"
 #include "Organ.h"
 #include "xmlhelp.h"
@@ -20,17 +21,28 @@ CSynthesizer::CSynthesizer(void)
 	m_bpm = 120;
 	m_secperbeat = 0.5;
 	m_beatspermeasure = 4;
+
+	for (int i = 0; i <= NUM_EFFECTS_BUILD; i++) {
+		m_effects[i] = NULL;
+	}
 }
 
 
 CSynthesizer::~CSynthesizer(void)
 {
+	Clear();	
 }
 
 void CSynthesizer::Clear(void)
 {
     m_instruments.clear();
 	m_notes.clear();
+	for (int i = 0; i<= NUM_EFFECTS_BUILD; i++){
+		if (m_effects[i] != NULL){
+			delete m_effects[i];
+		}
+	}
+	m_factory.clear();
 }
 
 
@@ -185,6 +197,10 @@ void CSynthesizer::XmlLoadInstrument(IXMLDOMNode * xml)
         {
            XmlLoadNote(node, instrument);
         }
+		if(name == L"effect")
+        {
+           XmlLoadEffect(node, instrument);
+        }
     }
 }
 
@@ -195,7 +211,14 @@ void CSynthesizer::XmlLoadNote(IXMLDOMNode * xml, std::wstring & instrument)
     m_notes.back().XmlLoad(xml, instrument);
 }
 
-
+void CSynthesizer::XmlLoadEffect(IXMLDOMNode * xml, std::wstring & instrument)
+{
+    m_notes.push_back(CNote());
+	m_notes.back().XmlLoad(xml, std::wstring(L"effect"));
+	CNote temp;
+	temp.XmlLoad(xml, instrument);
+	m_factory.addEffectNode(temp);
+}
 
 //! Start the synthesizer
 void CSynthesizer::Start(void)
@@ -205,6 +228,7 @@ void CSynthesizer::Start(void)
     m_measure = 0;
     m_beat = 0;
     m_time = 0;
+	m_factory.start();
 }
 
 //! Generate one audio frame
@@ -244,10 +268,19 @@ bool CSynthesizer::Generate(double * frame)
         {
             instrument = new COrgan(m_bpm);
         }
+		else if(note->Instrument() == L"OctaveUp")
+		{
+			m_effects[INDEX_OCTAVEUP] = new COctaveUp();
+		}
+		else if(note->Instrument() == L"effect")
+		{
+			m_factory.nextEffect();
+		}
 
         // Configure the instrument object
         if(instrument != NULL)
         {
+			m_factory.fitEffects(instrument, note->Instrument());
             instrument->SetSampleRate(GetSampleRate());
 			instrument->SetNote(note);
             instrument->Start();
@@ -261,11 +294,18 @@ bool CSynthesizer::Generate(double * frame)
     //
     // Phase 2: Clear all channels to silence 
     //
+	for(int c=0;  c<GetNumChannels();  c++)
+	{
+		frame[c] = 0;
+	}
 
-    for(int c=0;  c<GetNumChannels();  c++)
-    {
-        frame[c] = 0;
-    }
+	double channelframes[NUM_EFFECTS_BUILD + 1][2];
+	for (int i = 0; i <= NUM_EFFECTS_BUILD; i++){
+		for(int c=0;  c<GetNumChannels();  c++)
+		{
+			channelframes[i][c] = 0;
+		}
+	}
 
     //
     // Phase 3: Play an active instruments
@@ -293,10 +333,12 @@ bool CSynthesizer::Generate(double * frame)
         {
             // If we returned true, we have a valid sample.  Add it 
             // to the frame.
-            for(int c=0;  c<GetNumChannels();  c++)
-            {
-                frame[c] += instrument->Frame(c);
-            }
+			for (int i = 0; i <= NUM_EFFECTS_BUILD; i++){
+				for(int c=0;  c<GetNumChannels();  c++)
+				{
+					channelframes[i][c] += instrument->Frame(c) * instrument->GetSend(i);
+				}
+			}
         }
         else
         {
@@ -309,6 +351,23 @@ bool CSynthesizer::Generate(double * frame)
         // Move to the next instrument in the list
         node = next;
     }
+
+	//
+	// Phase 3.5: Mix the effects channels to generate the final frames.
+	//
+
+	for (int i = 0; i <= NUM_EFFECTS_BUILD; i++){
+		if (m_effects[i]){
+			m_effects[i]->Process(channelframes[i]);
+		}
+	}
+
+	for (int i = 0; i <= NUM_EFFECTS_BUILD; i++){
+		for(int c=0;  c<GetNumChannels();  c++)
+		{
+			frame[c] += channelframes[i][c];
+		}
+	}
 
 	//
     // Phase 4: Advance the time and beats

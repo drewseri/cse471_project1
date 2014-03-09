@@ -29,6 +29,7 @@
 // Global defaults
 //
 #define NUM_EFFECTS_BUILD	1
+#define INDEX_OCTAVEUP	1
 
 // Next default values for new objects
 // 

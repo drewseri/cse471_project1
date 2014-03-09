@@ -1,9 +1,12 @@
 #include "StdAfx.h"
 #include "Note.h"
-
+#include "sstream"
 
 CNote::CNote(void)
 {
+	for (int i = 0; i <= NUM_EFFECTS_BUILD; i++){
+		sends[i] = (i == 0) ? 1.0 : 0.0; //Default dry channel to full and all effects channels to mute
+	}
 }
 
 
@@ -52,6 +55,20 @@ void CNote::XmlLoad(IXMLDOMNode * xml, std::wstring & instrument)
             value.ChangeType(VT_R8);
             m_beat = value.dblVal - 1;
         }
+		else
+		{
+			for (int i = 0; i <= NUM_EFFECTS_BUILD; i++){
+				std::ostringstream convert;
+				convert << "send";
+				convert << i;
+				std::string temp = convert.str();
+				std::wstring nodeName = std::wstring(temp.begin(), temp.end());
+				if(wcscmp(name, nodeName.c_str()) == 0) {
+					value.ChangeType(VT_R8);
+					sends[i] = value.dblVal;
+				}
+			}
+		}
 
     }
 
@@ -67,4 +84,20 @@ bool CNote::operator<(const CNote &b)
         return true;
 
     return false;
+}
+
+void CNote::SetSend(int send, double value){
+	if (send > NUM_EFFECTS_BUILD) {
+		//index out of range. TODO: Should throw exception if time permits.
+		return;
+	}
+	sends[send] = value;
+}
+
+double CNote::GetSend(int send){
+	if (send > NUM_EFFECTS_BUILD) {
+		//index out of range. TODO: Should throw exception if time permits.
+		return 0.0;
+	}
+	return sends[send];
 }
