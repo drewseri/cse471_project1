@@ -148,6 +148,9 @@ bool CDrumInstrument::Generate(void)
 		double amplitude = 1;
 		if(m_time<.05) {
 			amplitude = 20*m_time;
+		} else if(m_duration*60/m_bpm-m_time < .05)
+		{
+			amplitude = 20*(m_duration*60/m_bpm-m_time);
 		}
 		
 
