@@ -30,8 +30,13 @@
 
 // Global defaults
 //
-#define NUM_EFFECTS_BUILD	1
-#define INDEX_OCTAVEUP	1
+#define NUM_EFFECTS_BUILD	5
+#define INDEX_GATE	1
+#define INDEX_REVERB	2
+#define INDEX_CHORUS	3
+#define INDEX_FLANGER	4
+#define INDEX_OCTAVEUP	5
+#define QUEUESIZE	4410
 
 // Next default values for new objects
 // 

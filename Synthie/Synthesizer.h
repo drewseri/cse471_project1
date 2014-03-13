@@ -6,6 +6,7 @@
 #include "Effect.h"
 #include "Note.h"
 #include "EffectFactory.h"
+#include "resource.h"
 
 class CSynthesizer
 {
