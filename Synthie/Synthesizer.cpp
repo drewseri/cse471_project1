@@ -269,6 +269,10 @@ bool CSynthesizer::Generate(double * frame)
         {
             instrument = new COrgan(m_bpm);
         }
+		else if(note->Instrument() == L"DrumInstrument")
+		{
+			instrument = new CDrumInstrument(m_bpm);
+		}
 		else if(note->Instrument() == L"OctaveUp")
 		{
 			m_effects[INDEX_OCTAVEUP] = new COctaveUp();

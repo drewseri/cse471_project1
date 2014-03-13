@@ -168,6 +168,7 @@ bool CDrumInstrument::Generate(void)
 
 		m_sinewave.SetFreq(m_sinewave.GetFreq() - 1/GetSampleRate()*m_sinewave.GetFreq());
 		m_time += 1/GetSampleRate();
+		m_sinewave.UpdatePhase();
 		return m_time*m_bpm/60 < m_duration;
 	/*}
 	else if(m_type = tom1)
