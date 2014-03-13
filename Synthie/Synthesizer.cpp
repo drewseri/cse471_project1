@@ -4,6 +4,7 @@
 #include "OctaveUp.h"
 #include "ToneInstrument.h"
 #include "Organ.h"
+#include "DrumInstrument.h"
 #include "xmlhelp.h"
 #include <algorithm>
 

@@ -24,12 +24,12 @@ bool CAR::Generate(){
     m_source->Generate();
 
     // Read the component's sample and make it our resulting frame.
-    if(m_time < m_attack) {
+    if(m_time*m_bpm/60 < m_attack) {
 		double amplitude = 20*m_time;
 		m_frame[0] = amplitude*m_source->Frame(0);
 		m_frame[1] = amplitude*m_source->Frame(1);
-	} else if(m_duration*60/m_bpm-m_time <.05) {
-		double amplitude = 20*(m_duration*60/m_bpm-m_release);
+	} else if(m_duration-m_time*m_bpm/60 < m_release) {
+		double amplitude = 20*((m_duration-m_time*m_bpm*60)/(m_duration-m_release));
 		m_frame[0] = amplitude*m_source->Frame(0);
 		m_frame[1] = amplitude*m_source->Frame(1);
 	}

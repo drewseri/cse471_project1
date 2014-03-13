@@ -9,6 +9,8 @@ public:
 	void Start();
 	bool Generate();
 	void SetBpm(double bpm) {m_bpm = bpm;}
+	void SetAttack(double attack) {m_attack=attack;}
+	void SetRelease(double release) {m_release=release;}
 
 private: 
 	double m_attack;

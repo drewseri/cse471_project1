@@ -21,6 +21,7 @@ public:
     void SetAmplitude(double a) {m_amp = a;}
 
 	void UpdatePhase();
+	double GetFreq() {return m_freq;}
 
 private:
     double m_freq;

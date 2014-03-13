@@ -78,6 +78,7 @@
     <ClCompile Include="AR.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< Updated upstream
     <ClCompile Include="Effect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -85,6 +86,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EffectFactory.cpp">
+=======
+    <ClCompile Include="DrumInstrument.cpp">
+>>>>>>> Stashed changes
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -161,6 +165,7 @@
     <ClInclude Include="AR.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< Updated upstream
     <ClInclude Include="Effect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -168,6 +173,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EffectFactory.h">
+=======
+    <ClInclude Include="DrumInstrument.h">
+>>>>>>> Stashed changes
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -185,6 +193,12 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="UserImages.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\score1.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\score2.bin">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
