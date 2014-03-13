@@ -7,6 +7,8 @@
 #include "DrumInstrument.h"
 #include "xmlhelp.h"
 #include <algorithm>
+#include "Additive.h"
+
 
 using namespace std;
 
@@ -276,6 +278,10 @@ bool CSynthesizer::Generate(double * frame)
 		else if(note->Instrument() == L"effect")
 		{
 			m_factory.nextEffect();
+		}
+		else if(note->Instrument() == L"Additive")
+		{
+			instrument = new CAdditive(m_bpm);
 		}
 
         // Configure the instrument object
