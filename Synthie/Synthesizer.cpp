@@ -5,7 +5,12 @@
 #include "ToneInstrument.h"
 #include "Organ.h"
 #include "DrumInstrument.h"
+#include "Additive.h"
 #include "xmlhelp.h"
+#include "Flanger.h"
+#include "Chorus.h"
+#include "Reverb.h"
+#include "NoiseGate.h"
 #include <algorithm>
 
 using namespace std;
@@ -22,6 +27,11 @@ CSynthesizer::CSynthesizer(void)
 	m_bpm = 120;
 	m_secperbeat = 0.5;
 	m_beatspermeasure = 4;
+
+	if (NUM_EFFECTS_BUILD != 3){
+		int * temp;
+		temp[6];
+	}
 
 	for (int i = 0; i <= NUM_EFFECTS_BUILD; i++) {
 		m_effects[i] = NULL;
@@ -273,9 +283,30 @@ bool CSynthesizer::Generate(double * frame)
 		{
 			instrument = new CDrumInstrument(m_bpm);
 		}
+		else if(note->Instrument() == L"Additive")
+        {
+            instrument = new CAdditive(m_bpm);
+        }
+
 		else if(note->Instrument() == L"OctaveUp")
 		{
 			m_effects[INDEX_OCTAVEUP] = new COctaveUp();
+		}
+		else if(note->Instrument() == L"Flanger")
+		{
+			m_effects[INDEX_FLANGER] = new CFlanger();
+		}
+		else if(note->Instrument() == L"Chorus")
+		{
+			m_effects[INDEX_CHORUS] = new CChorus();
+		}
+		else if(note->Instrument() == L"Reverb")
+		{
+			m_effects[INDEX_REVERB] = new CReverb();
+		}
+		else if(note->Instrument() == L"Gate")
+		{
+			m_effects[INDEX_GATE] = new CNoiseGate();
 		}
 		else if(note->Instrument() == L"effect")
 		{

@@ -14,8 +14,9 @@ EffectFactory::~EffectFactory(void)
 }
 
 void EffectFactory::nextEffect() {
-	if (m_effectNotes.size() > 0) {
+	if (m_effectNotes.size() > 0 || currentEffect < m_effectNotes.size()) {
 		m_activeEffects[m_effectNotes[currentEffect].Instrument()] = m_effectNotes[currentEffect];
+		currentEffect++;
 	}
 }
 
