@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "Wavetable.h"
 #include "Synthesizer.h"
 #include <cmath>
 #include "OctaveUp.h"
@@ -287,7 +288,9 @@ bool CSynthesizer::Generate(double * frame)
         {
             instrument = new CAdditive(m_bpm);
         }
-
+		else if (note->Instrument() == L"Wavetable") {
+			instrument = new CWavetable(m_bpm);
+		}
 		else if(note->Instrument() == L"OctaveUp")
 		{
 			m_effects[INDEX_OCTAVEUP] = new COctaveUp();
