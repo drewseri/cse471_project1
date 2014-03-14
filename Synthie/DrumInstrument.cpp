@@ -16,19 +16,6 @@ CDrumInstrument::CDrumInstrument(double bpm) : m_freq(500)
 	m_sinewave.SetAmplitude(.3);
 	m_attacked = false;
 
-	m_wavein.Open("audio/tom1.wav");
-	m_clipSampleRate = m_wavein.SampleRate();
-	m_numChannels = m_wavein.NumChannels();
-	m_numSampleFrames = m_wavein.NumSampleFrames();
-	for(int i = 0; i < m_numSampleFrames/m_numChannels; i++)
-	{
-		short frame[2];
-		
-		m_wavein.ReadFrame(frame);
-		double doubleFrame = (double)frame[0]/32767;
-		m_tom1.push_back(doubleFrame);
-	}
-	m_wavein.Close();
 	while(i<44100)
 	{
 		double number = distribution(generator);
@@ -53,19 +40,6 @@ CDrumInstrument::CDrumInstrument(void) : m_freq(500)
 	m_sinewave.SetAmplitude(.3);
 	m_attacked=false;
 
-
-
-	m_wavein.Open("audio/tom1.wav");
-	m_clipSampleRate = m_wavein.SampleRate();
-	m_numChannels = m_wavein.NumChannels();
-	m_numSampleFrames = m_wavein.NumSampleFrames();
-	for(int i = 0; i < m_numSampleFrames/m_numChannels; i++)
-	{
-		short *frame; 
-		m_wavein.ReadFrame(frame);
-		double doubleFrame = (double)frame[0]/32767;
-		m_tom1.push_back(doubleFrame);
-	}
 
 	while(i<44100)
 	{
