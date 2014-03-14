@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <score bpm="200" beatspermeasure="4">
   <instrument instrument="Organ">
+       <effect measure="1" beat="1" duration="0.5" send0="0.8" send2="0.1" send3="0.2"/>
        <note measure="1" beat="1" duration="0.75" note="D4" drawbar="876543210"/>
        <note measure="1" beat="1" duration="0.75" note="G4" drawbar="876543210"/>
        <note measure="1" beat="3" duration="0.75" note="F4" drawbar="876543210"/>
@@ -91,6 +92,7 @@
 
 
   <instrument instrument="Additive">
+       <effect measure="24" beat="1" duration="0.5" send0="0.7" send2="0.1" send3="0.3"/>
        <note measure="24" beat="1" duration="0.75" note="D4" drawbar="876543210" harmonic1="1.8.6.5.5.4.3.3" harmonic2="1.9.8.7.7.5.4.3"/>
        <note measure="24" beat="1" duration="0.75" note="G4" drawbar="876543210" harmonic1="1.8.6.5.5.4.3.3" harmonic2="1.9.8.7.7.5.4.3"/>
        <note measure="24" beat="3" duration="0.75" note="F4" drawbar="876543210" harmonic1="1.8.6.5.5.4.3.3" harmonic2="1.9.8.7.7.5.4.3"/>
@@ -178,7 +180,9 @@
     <note measure="45" beat="3" duration="2" note="G4" drawbar="805020000" harmonic1="1.8.6.5.5.4.3.3" harmonic2="1.9.8.7.7.5.4.3"/>
 
   </instrument>
-  <instrument instrument="DrumInstrument">
+  
+    <instrument instrument="DrumInstrument">
+	<effect measure="17" beat="1" duration="0.5" send0="0.5" send1="0.8" />
     <note measure="17" beat="3" duration="0.4" note="E2" />
     <note measure="18" beat="3" duration="0.4" note="E2" />
     <note measure="19" beat="3" duration="0.4" note="E2" />
@@ -201,6 +205,19 @@
     <note measure="45" beat="3" duration="0.4" note="E2" />
 
 
+  </instrument>
+  
+  	 <instrument instrument="Chorus">
+		<note/>
+	 </instrument>
+	 <instrument instrument="Flanger">
+		<note/>
+	 </instrument>
+	 <instrument instrument="Reverb">
+		<note/>
+  </instrument>
+  <instrument instrument="Gate">
+		<note/>
   </instrument>
 </score>
 
