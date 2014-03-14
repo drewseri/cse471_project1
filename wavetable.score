@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<score bpm="120" beatspermeasure="2">
+     <instrument instrument="Wavetable">
+          <note measure="1" beat="2" duration="10" file="media/p1.wav" file2="media/p2.wav" sustain=""/>
+          <note measure="11" beat="2" duration="2" file="media/p3.wav" file2="media/p4.wav"/>
+          <note measure="13" beat="2" duration="2" file="media/p5.wav" file2="media/p6.wav"/>
+     </instrument>
+</score>
+
