@@ -178,5 +178,29 @@
     <note measure="45" beat="3" duration="2" note="G4" drawbar="805020000" harmonic1="1.8.6.5.5.4.3.3" harmonic2="1.9.8.7.7.5.4.3"/>
 
   </instrument>
+  <instrument instrument="DrumInstrument">
+    <note measure="17" beat="3" duration="0.4" note="E2" />
+    <note measure="18" beat="3" duration="0.4" note="E2" />
+    <note measure="19" beat="3" duration="0.4" note="E2" />
+    <note measure="20" beat="3" duration="0.4" note="E2" />
+    <note measure="21" beat="3" duration="0.4" note="E2" />
+    <note measure="22" beat="3" duration="0.4" note="E2" />
+    <note measure="23" beat="3" duration="0.4" note="E2" />
+    <note measure="24" beat="3" duration="0.4" note="E2" />
+
+    <note measure="35" beat="3" duration="0.4" note="E2" />
+    <note measure="36" beat="3" duration="0.4" note="E2" />
+    <note measure="37" beat="3" duration="0.4" note="E2" />
+    <note measure="38" beat="3" duration="0.4" note="E2" />
+    <note measure="39" beat="3" duration="0.4" note="E2" />
+    <note measure="40" beat="3" duration="0.4" note="E2" />
+    <note measure="41" beat="3" duration="0.4" note="E2" />
+    <note measure="42" beat="3" duration="0.4" note="E2" />
+    <note measure="43" beat="3" duration="0.4" note="E2" />
+    <note measure="44" beat="3" duration="0.4" note="E2" />
+    <note measure="45" beat="3" duration="0.4" note="E2" />
+
+
+  </instrument>
 </score>
 
